@@ -2,9 +2,13 @@
 import cv2
 import numpy as np
 import imutils
+
 #colors
 from webcolors import rgb_to_name,CSS3_HEX_TO_NAMES,hex_to_rgb #python3 -m pip install webcolors
 from scipy.spatial import KDTree
+
+
+
 def convert_rgb_to_names(rgb_tuple):
     # a dictionary of all the hex and their respective names in css3
     css3_db = CSS3_HEX_TO_NAMES#css3_hex_to_names
@@ -54,7 +58,7 @@ class ShapeDetector:
 if __name__ == '__main__':
     # load the image and resize it to a smaller factor so that
     # the shapes can be approximated better
-    image = cv2.imread('python_shapes_detection_base.PNG')
+    image = cv2.imread('python_shapes_detection_base.png')
     resized = imutils.resize(image, width=300)
     ratio = image.shape[0] / float(resized.shape[0])
     
