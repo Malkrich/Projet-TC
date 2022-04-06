@@ -2,10 +2,9 @@ import numpy as np
 import cv2
 import imutils
 
-def shape_detection(img):
-    cnts, hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
-    
-    #cnts = imutils.grab_contours(cnts)
+def contours_detection(img):
+    cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+    cnts = imutils.grab_contours(cnts)
     
     return cnts
     
@@ -23,9 +22,14 @@ while(True):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(gray, 127, 255, 0)
     
-    cnts = shape_detection(thresh)
-    cv2.drawContours(frame, cnts, -1, (0,255,0), 3)
-    cv2.imshow('contours',frame)
+    cnts = contours_detection(thresh)
+    
+    for c in cnts:
+        peri = cv2.arcLength(c, True)
+        approx = cv2.approxPolyDP(c, 0.04 * peri, True)
+    
+    cv2.drawContours(thresh, [approx], -1, (0,255,0), 3)
+    cv2.imshow('contours',thresh)
     
     
     # on appuis sur q pour quitter
