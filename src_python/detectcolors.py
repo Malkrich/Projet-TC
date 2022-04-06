@@ -60,7 +60,7 @@ if __name__ == '__main__':
     # the shapes can be approximated better
     image = cv2.imread('python_shapes_detection_base.png')
     resized = imutils.resize(image, width=300)
-    ratio = image.shape[0] / float(resized.shape[0])
+    ratio = image.shape[0] / float(resized.shape[0]) # get height : image.shape[1] -> width, image.shape[2] -> channel
     
     # convert the resized image to grayscale, blur it slightly,
     # and threshold it
