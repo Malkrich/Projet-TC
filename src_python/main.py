@@ -3,28 +3,23 @@ import cv2
 import imutils
 
 
-def get_blue(img):
+def get_red(img):
     """ Solution RGB """
     blue_c = img[:,:,0]
     green_c = img[:,:,1]
     red_c = img[:,:,2]
     ret_b, blue = cv2.threshold(blue_c,200,255,0)
     ret_g, green = cv2.threshold(green_c,200,255,0)
-    ret_r, red = cv2.threshold(red_c,200,255,0)
+    ret_r, red = cv2.threshold(red_c,240,255,0)
 
     color_to_detect = red
     elim = np.logical_and(blue,green)
     result = np.logical_and(color_to_detect,np.logical_not(elim))
     result.dtype = 'uint8'
-    cv2.imshow('resultat',result*255)
+    result = result*255
     
-    
-    
-    
-    # debug
-    cv2.imshow('blue',blue)
-    cv2.imshow('green',green)
-    cv2.imshow('red',red)
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(10,10))
+    erosion = cv2.erode(result,kernel,iterations=1)
     
     """ Solution HSV """
     #hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -33,8 +28,7 @@ def get_blue(img):
     #blue = cv2.inRange(hsv, teinte_basse, teinte_haute)
     #cv2.imshow('blue',blue)
     
-    ret = blue
-    return ret
+    return erosion
 
 def contours_detection(img):
     cnts = cv2.findContours(img.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
@@ -52,15 +46,15 @@ while(True):
     ret, frame = cap.read()
     
     # opérations
-    blue = get_blue(frame)
+    logical_img = get_red(frame)
     
     # detection de contours
-    cnts = contours_detection(blue)
+    cnts = contours_detection(logical_img)
     
     for c in cnts:
         peri = cv2.arcLength(c, True)
         approx = cv2.approxPolyDP(c, 0.04 * peri, True)
-        #cv2.drawContours(blue, [approx], -1, (0,255,0), 3)
+        cv2.drawContours(frame, [approx], -1, (0,255,0), 3)
     
     cv2.imshow('contours',frame)
     
