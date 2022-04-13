@@ -2,12 +2,18 @@ import numpy as np
 import cv2
 import imutils
 
+
 def get_blue(img):
     
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     
-    teinte_basse = np.array([160,220,0])
-    teinte_haute = np.array([180,255,255])
+    """ Solution RGB """
+    #blue_channel = img[:,:,0]
+    #ret, blue = cv2.threshold(blue_channel,254,255,0)
+    
+    """ Solution HSV """
+    teinte_basse = np.array([100,200,200])
+    teinte_haute = np.array([140,255,255])
     blue = cv2.inRange(hsv, teinte_basse, teinte_haute)
     
     return blue
@@ -39,8 +45,9 @@ while(True):
     for c in cnts:
         peri = cv2.arcLength(c, True)
         approx = cv2.approxPolyDP(c, 0.04 * peri, True)
+        #cv2.drawContours(blue, [approx], -1, (0,255,0), 3)
     
-    cv2.drawContours(blue, [approx], -1, (0,255,0), 3)
+
     cv2.imshow('contours',blue)
     
     
