@@ -4,19 +4,37 @@ import imutils
 
 
 def get_blue(img):
-    
-    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    
     """ Solution RGB """
-    #blue_channel = img[:,:,0]
-    #ret, blue = cv2.threshold(blue_channel,254,255,0)
+    blue_c = img[:,:,0]
+    green_c = img[:,:,1]
+    red_c = img[:,:,2]
+    ret_b, blue = cv2.threshold(blue_c,200,255,0)
+    ret_g, green = cv2.threshold(green_c,200,255,0)
+    ret_r, red = cv2.threshold(red_c,200,255,0)
+
+    color_to_detect = red
+    elim = np.logical_and(blue,green)
+    result = np.logical_and(color_to_detect,np.logical_not(elim))
+    result.dtype = 'uint8'
+    cv2.imshow('resultat',result*255)
+    
+    
+    
+    
+    # debug
+    cv2.imshow('blue',blue)
+    cv2.imshow('green',green)
+    cv2.imshow('red',red)
     
     """ Solution HSV """
-    teinte_basse = np.array([100,200,200])
-    teinte_haute = np.array([140,255,255])
-    blue = cv2.inRange(hsv, teinte_basse, teinte_haute)
+    #hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    #teinte_basse = np.array([110,0,0])
+    #teinte_haute = np.array([130,120,255])
+    #blue = cv2.inRange(hsv, teinte_basse, teinte_haute)
+    #cv2.imshow('blue',blue)
     
-    return blue
+    ret = blue
+    return ret
 
 def contours_detection(img):
     cnts = cv2.findContours(img.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
@@ -28,16 +46,13 @@ def contours_detection(img):
 # lancement capture vidéo
 cap = cv2.VideoCapture(0)
 
-# lecture frame by frame
+# lecture frame par frame
 while(True):
     # Capture frame by frame
     ret, frame = cap.read()
     
     # opérations
-    # pre traitement
-    #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) # nuances de gris
     blue = get_blue(frame)
-    #ret, thresh = cv2.threshold(blue, 127, 255, 0)
     
     # detection de contours
     cnts = contours_detection(blue)
@@ -47,8 +62,7 @@ while(True):
         approx = cv2.approxPolyDP(c, 0.04 * peri, True)
         #cv2.drawContours(blue, [approx], -1, (0,255,0), 3)
     
-
-    cv2.imshow('contours',blue)
+    cv2.imshow('contours',frame)
     
     
     # on appuis sur q pour quitter
