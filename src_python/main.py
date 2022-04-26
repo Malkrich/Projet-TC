@@ -62,9 +62,12 @@ while(True):
     for c in cnts:
         peri = cv2.arcLength(c, True)
         approx = cv2.approxPolyDP(c, 0.04 * peri, True)
-        cv2.drawContours(frame, [approx], -1, (0,255,0), 3)
-        f.set_sommets(len(approx))
-        f.display_info()
+        
+        n = np.sqrt(np.sum(np.power(approx,2)))
+        if n > 1000:
+            cv2.drawContours(frame, [approx], -1, (0,255,0), 3)
+            f.set_forme(len(approx))
+            f.display_info()
     
     cv2.imshow('contours',frame)
     
