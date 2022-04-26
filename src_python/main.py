@@ -2,6 +2,8 @@ import numpy as np
 import cv2
 import imutils
 
+from class_form import form
+
 
 def get_red(img):
     """ Solution RGB """
@@ -42,6 +44,8 @@ def contours_detection(img):
 # lancement capture vidéo
 cap = cv2.VideoCapture(0)
 
+f = form()
+
 # lecture frame par frame
 while(True):
     # Capture frame by frame
@@ -57,7 +61,8 @@ while(True):
         peri = cv2.arcLength(c, True)
         approx = cv2.approxPolyDP(c, 0.04 * peri, True)
         cv2.drawContours(frame, [approx], -1, (0,255,0), 3)
-        print(len(approx))
+        f.set_sommets(len(approx))
+        f.display_info()
     
     cv2.imshow('contours',frame)
     
