@@ -22,8 +22,10 @@ def get_red(img):
     result = result*255
     
     # erosion pour retirer le bruit
-    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(10,10))
-    erosion = cv2.erode(result,kernel,iterations=1)
+    #kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(10,10))
+    kernel = None
+    erosion = cv2.erode(result,kernel,iterations=2)
+    dilatation = cv2.dilate(erosion,kernel,iterations=2)
     
     """ Solution HSV """
     #hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -62,7 +64,7 @@ while(True):
         approx = cv2.approxPolyDP(c, 0.04 * peri, True)
         cv2.drawContours(frame, [approx], -1, (0,255,0), 3)
         f.set_sommets(len(approx))
-        #f.display_info()
+        f.display_info()
     
     cv2.imshow('contours',frame)
     
