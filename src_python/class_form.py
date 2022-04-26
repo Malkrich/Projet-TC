@@ -1,8 +1,11 @@
 
 
 class form:
+    # attribut du nombre de sommet et du nom du polygone
     sommets = 0
     pol = 'undefined'
+    
+    # collection des polygones pour en selectionner un
     collec_poly = {
         3 : 'triangle',
         4 : 'rectangle',
