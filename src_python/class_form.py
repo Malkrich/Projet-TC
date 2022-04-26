@@ -14,7 +14,7 @@ class form:
     def set_sommets(self,s):
         self.sommets = s
     
-    
+        
     # fonction de test
     def display_info(self):
         print(self.poly.get(self.sommets,'undefined'))
