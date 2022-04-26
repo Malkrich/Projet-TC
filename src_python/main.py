@@ -10,9 +10,9 @@ def get_red(img):
     blue_c = img[:,:,0]
     green_c = img[:,:,1]
     red_c = img[:,:,2]
-    ret_b, blue = cv2.threshold(blue_c,200,255,0)
-    ret_g, green = cv2.threshold(green_c,200,255,0)
-    ret_r, red = cv2.threshold(red_c,240,255,0)
+    ret_b, blue = cv2.threshold(blue_c,190,255,0)
+    ret_g, green = cv2.threshold(green_c,190,255,0)
+    ret_r, red = cv2.threshold(red_c,245,255,0)
 
     # on fait : /(blue && green) && red
     color_to_detect = red
@@ -51,7 +51,7 @@ while(True):
     # Capture frame by frame
     ret, frame = cap.read()
     
-    # opérations
+    # pre traitement
     logical_img = get_red(frame)
     
     # detection de contours
@@ -62,7 +62,7 @@ while(True):
         approx = cv2.approxPolyDP(c, 0.04 * peri, True)
         cv2.drawContours(frame, [approx], -1, (0,255,0), 3)
         f.set_sommets(len(approx))
-        f.display_info()
+        #f.display_info()
     
     cv2.imshow('contours',frame)
     
