@@ -16,11 +16,8 @@ class form:
     def __init__(self):
         print('ajout instance class form')
     
-    def set_sommets(self,s):
+    def set_forme(self,s):
         self.sommets = s
-        self.get_form()
-    
-    def get_form(self):
         self.pol = self.collec_poly.get(self.sommets,'undefined')
         
     # fonction de test
