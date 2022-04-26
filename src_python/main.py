@@ -12,12 +12,14 @@ def get_red(img):
     ret_g, green = cv2.threshold(green_c,200,255,0)
     ret_r, red = cv2.threshold(red_c,240,255,0)
 
+    # on fait : /(blue && green) && red
     color_to_detect = red
     elim = np.logical_and(blue,green)
     result = np.logical_and(color_to_detect,np.logical_not(elim))
     result.dtype = 'uint8'
     result = result*255
     
+    # erosion pour retirer le bruit
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(10,10))
     erosion = cv2.erode(result,kernel,iterations=1)
     
@@ -55,6 +57,7 @@ while(True):
         peri = cv2.arcLength(c, True)
         approx = cv2.approxPolyDP(c, 0.04 * peri, True)
         cv2.drawContours(frame, [approx], -1, (0,255,0), 3)
+        print(len(approx))
     
     cv2.imshow('contours',frame)
     
