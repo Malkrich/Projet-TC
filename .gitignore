@@ -1,4 +1,5 @@
 src_python/tests.py
+src_python/detectcolors.py.save
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
