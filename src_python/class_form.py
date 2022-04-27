@@ -19,7 +19,15 @@ class form:
     def set_forme(self,s):
         self.sommets = s
         self.pol = self.collec_poly.get(self.sommets,'undefined')
-        
+    
+    def forme_exist(self):
+        ret = False
+        if self.pol != 'undefined':
+            ret = True
+
+        return ret
+    
     # fonction de test
     def display_info(self):
-        print(self.pol)
+        if self.forme_exist():
+            print('J ai trouve une forme : ',self.pol)
