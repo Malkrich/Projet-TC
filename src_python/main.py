@@ -31,6 +31,7 @@ while(True):
         approx = cv2.approxPolyDP(c, 0.04 * peri, True)    
         cv2.drawContours(frame, [approx], -1, (0,255,0), 3)
         f.set_forme(len(approx))
+        print(approx)
         f.display_info()
     
     GPIO.output(SWITCH_LAMPE,f.forme_exist())
