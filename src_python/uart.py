@@ -1,3 +1,5 @@
+
+
 """
 Tram :
     Préfixe :
@@ -29,3 +31,12 @@ def send_message_motor(direction):
 def send_message_lamp(zone):
     ret = "XL" + collec_zone.get(zone,'')
     return ret
+
+def read_data(ser):
+    data = ""
+    current_data = ""
+    while current_data != "x":
+        current_data = ser.read().decode()
+        data += current_data
+
+    return data
