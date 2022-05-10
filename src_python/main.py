@@ -6,11 +6,27 @@ import cv2
 from detect_cible import main_contour
 from class_form import form
 from uart import send_message_motor,send_message_lamp
+from class_zone import zone_HG,zone_HD,zone_BG,zone_BD,zone_C
 
 
 ## Setup general
 cap = cv2.VideoCapture(0)
 f = form()
+
+## initialisation class zones
+    # calcul des dimensions de l'image
+ret, frame = cap.read()
+h = len(frame)
+w = len(frame[0])
+l = (int)(w/3)
+eps = (int)(h/3)
+    # mise en place des differentes zones
+haut_gauche = zone_HG(h,w,l,eps)
+haut_droite = zone_HD(h,w,l,eps)
+bas_gauche = zone_BG(h,w,l,eps)
+bas_droite = zone_BD(h,w,l,eps)
+centre = zone_C(h,w,l,eps)
+liste_zone = [centre,haut_gauche,haut_droite,bas_gauche,bas_droite]
 
 ## lancement boucle infinie
 while(True):
@@ -28,7 +44,17 @@ while(True):
         # affichage non nécessaire
         cX,cY = f.get_centre()
         cv2.circle(frame,(cX,cY),4,(0,255,0),-1)
-        f.display_info()
+        #f.display_info()
+        
+    cX,cY = f.get_centre()
+    
+    if f.forme_exist():
+        for z in liste_zone:
+            if z.in_zone(cX,cY):
+                print(z.get_name())
+                message = send_message_lamp(z.get_zoneNb())
+                print(message)
+                break
         
     cv2.imshow('contours',frame)
     
