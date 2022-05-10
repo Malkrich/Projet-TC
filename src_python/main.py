@@ -38,6 +38,9 @@ while(True):
     
     cnts = main_contour(frame)
     
+    distance = read_data(ser)
+    print(distance)
+    
     for c in cnts:
         peri = cv2.arcLength(c, True)
         approx = cv2.approxPolyDP(c, 0.04 * peri, True)    
@@ -51,6 +54,7 @@ while(True):
         
     cX,cY = f.get_centre()
     
+    # envoie de message si une forme existe
     if f.forme_exist():
         for z in liste_zone:
             if z.in_zone(cX,cY):
