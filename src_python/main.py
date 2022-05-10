@@ -1,6 +1,8 @@
 ## librairies standards
 import numpy as np
 import cv2
+import serial
+import time
 
 ## fonctions et class des fichiers externes
 from detect_cible import main_contour
@@ -11,6 +13,7 @@ from class_zone import zone_HG,zone_HD,zone_BG,zone_BD,zone_C
 
 ## Setup general
 cap = cv2.VideoCapture(0)
+ser = serial.Serial('/dev/ttyS0',19200)
 f = form()
 
 ## initialisation class zones
@@ -51,9 +54,9 @@ while(True):
     if f.forme_exist():
         for z in liste_zone:
             if z.in_zone(cX,cY):
-                print(z.get_name())
-                message = send_message_lamp(z.get_zoneNb())
-                print(message)
+                data = send_message_lamp(z.get_zoneNb())
+                print(data)
+                ser.write(str.encode(data))
                 break
         
     cv2.imshow('contours',frame)
@@ -65,3 +68,4 @@ while(True):
 ## fin programme
 cap.release()
 cv2.destroyAllWindows()
+ser.close()
