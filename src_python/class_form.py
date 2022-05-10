@@ -33,6 +33,10 @@ class form:
             self.cX=0
             self.cY=0
             
+    def clear_forme(self):
+        self.sommets = 0
+        self.pol = 'undefined'
+            
     def get_centre(self):
         return self.cX,self.cY
     
@@ -45,4 +49,4 @@ class form:
     # fonction de test
     def display_info(self):
         if self.forme_exist():
-            print('J ai trouve une forme : ',self.pol,", au centre : ",self.cX,",",self.cY)
+            print('Forme : ',self.pol,", au coordonnées : (",self.cX,",",self.cY,")")
