@@ -19,15 +19,17 @@ bas_gauche = zone_BG(h,w,l,eps)
 bas_droite = zone_BD(h,w,l,eps)
 centre = zone_C(h,w,l,eps)
 liste_zone = [centre,haut_gauche,haut_droite,bas_gauche,bas_droite]
+
+
 x = 400
 y = 500
 
 for z in liste_zone:
     if z.in_zone(x,y):
-        print("Le point est dans la zone : ",z.get_name(),", Nb : ",z.get_zoneNb())
+        print("Le point (",x,",",y,") est dans la zone : ",z.get_name(),", Nb : ",z.get_zoneNb())
         break
 
-print("Test zone_HG : ",haut_gauche.in_zone(400,500))
+#print("Test zone_HG : ",haut_gauche.in_zone(400,500))
 
 rectangle_color=(0,0,255)
 cv2.rectangle(frame,(0,0),((int)(w/2),(int)(h/2)),rectangle_color,2)

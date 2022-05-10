@@ -5,6 +5,7 @@ Tram :
         - L : lampe
     
     Moteurs :
+        - A/R/D/G : avancer/reculer/droite/gauche
     
     Lampe :
         1) H/B : haut/bas
@@ -21,9 +22,10 @@ collec_zone = {
     4 : 'C'
 }
 
-def send_message_motor():
-    print("send message tout motor")
+def send_message_motor(direction):
+    ret = "XM" + direction
+    return ret
     
 def send_message_lamp(zone):
-    ret = "L" + collec_zone.get(zone,'') + "X"
+    ret = "XL" + collec_zone.get(zone,'')
     return ret
