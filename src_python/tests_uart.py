@@ -15,12 +15,13 @@ Pin 15 = RX
 ser = serial.Serial('/dev/ttyS0',19200)
 
 # programme
-#data = send_message_lamp(5)
-#print("Sending : ",data)
-#ser.write(str.encode(data))
-
 while True:
-    data = ser.read()
+    data = ""
+    current_data = ""
+    while current_data != "x":
+        current_data = ser.read().decode()
+        data += current_data
+        
     print(data)
 
 ## fin programme
