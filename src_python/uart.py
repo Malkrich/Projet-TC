@@ -3,11 +3,12 @@
 """
 Tram :
     Préfixe :
-        - M : servomoteur
+        - m : servomoteur
         - L : lampe
     
     Moteurs :
-        - A/R/D/G : avancer/reculer/droite/gauche
+        - a/r/d/g : avancer/reculer/droite/gauche
+        - x : arreter
     
     Lampe :
         1) H/B : haut/bas
@@ -24,8 +25,17 @@ collec_zone = {
     4 : 'C'
 }
 
+collec_direction = {
+    'front' : 'a',
+    'back' : 'r',
+    'left' : 'l',
+    'right' : 'r',
+}
+
 def send_message_motor(direction):
-    ret = "XM" + direction
+    ret = 'x'
+    if direction != 'stop':
+        ret = 'm' + collec_direction.get(direction,'')
     return ret
     
 def send_message_lamp(zone):
