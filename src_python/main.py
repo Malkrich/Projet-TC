@@ -7,7 +7,7 @@ import time
 ## fonctions et class des fichiers externes
 from detect_cible import main_contour
 from class_form import form
-from uart import send_message_motor,send_message_lamp
+from uart import send_message_motor,send_message_lamp,read_data
 from class_zone import zone_HG,zone_HD,zone_BG,zone_BD,zone_C
 
 
@@ -38,8 +38,10 @@ while(True):
     
     cnts = main_contour(frame)
     
-    distance = read_data(ser)
-    print(distance)
+    #distance = read_data(ser)
+    #print(distance)
+    
+    f.clear_forme()
     
     for c in cnts:
         peri = cv2.arcLength(c, True)
@@ -50,7 +52,7 @@ while(True):
         # affichage non nécessaire
         cX,cY = f.get_centre()
         cv2.circle(frame,(cX,cY),4,(0,255,0),-1)
-        #f.display_info()
+        f.display_info()
         
     cX,cY = f.get_centre()
     
