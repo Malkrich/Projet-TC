@@ -26,5 +26,9 @@ Cette fonction permet d'approximer les contours dessinés. Cela permet de récup
 ## Programme principal
 
 ### La class form
-
-
+Cette class permet de traiter la forme détectée dans la partie précédente.  
+Pour cela, la __class form__ prend en attribut le nombre de sommets ainsi que les cordonnées du centre de la forme. Un attribut *pol* permet de déduire explicitement le type de polynome, à l'aide d'un dictionnaire nommé *collec_poly*.  
+Les méthode *set_form()* et *clear_form()* permettent respectivement de définir la forme détectée et repasser à une forme indéfinie. Cette méthode permet aussi de calculer le centre de la forme, connaissant les coordonnées de chaque sommet.  
+La méthode *get_centre()* permet de renvoyer les coordonnées du centre.  
+la méthode *forme_exist()* permet de renvoyer vrai si une forme est présente sur l'écran ou sinon elle renvoie faux.  
+Enfin, une méthode *display_info()* est une fonction utilitaire de debuggage et permet de voir les informations que contient la __class form__ en sortie de terminal.  
