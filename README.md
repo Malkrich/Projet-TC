@@ -9,7 +9,7 @@ En résumé : resultat = red && not(blue && green).
 #### 2) élimination du bruit
 Pour cela, on effectue une simple érosion sur l'image pour éliminer les petit pixel isolés.
 On utilise un élément structurant circulaire de 10x10 pixels. Cela permet de récupérer les formes nécessaires.  
-### Détection des contours
+Détection des contours
 Pour détecter les contours, on utilise les fonctions de la librairie *CV2*. __2 en particulier__.  
 
 #### 1) cv2.findContour()
