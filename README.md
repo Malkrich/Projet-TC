@@ -20,7 +20,7 @@ Pour détecter les contours, on utilise les fonctions de la librairie *CV2*. __2
 #### 1) cv2.findContour()
 Elle permet de faire un contour avec des points à partir d'une image binaire. Ces contours contiennent souvent beaucoup de points.  
 
-2) cv2.approxPolyDP()
+#### 2) cv2.approxPolyDP()
 Cette fonction permet d'approximer les contours dessinés. Cela permet de récupérer une simple forme avec peu de points. Connaissant le nombre de points qui entoure la forme, on peut alors en déduire quelle forme il s'agit.  
 
 ## Programme principal
