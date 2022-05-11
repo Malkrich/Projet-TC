@@ -4,25 +4,25 @@
 Tram :
     Préfixe :
         - m : servomoteur
-        - L : lampe
+        - l : lampe
     
     Moteurs :
         - a/r/d/g : avancer/reculer/droite/gauche
         - x : arreter
     
     Lampe :
-        1) H/B : haut/bas
-        2) G/D/C : gauche/droite/centre
+        1) h/b : haut/bas
+        2) g/d/c  : gauche/droite/centre
 
-    En fin de chaine : +"X"
+    revenir en mode scan : "x"
 """
 
 collec_zone = {
-    0 : 'HG',
-    1 : 'HD',
-    2 : 'BG',
-    3 : 'BD',
-    4 : 'C'
+    0 : 'hg',
+    1 : 'hd',
+    2 : 'bg',
+    3 : 'bd',
+    4 : 'c'
 }
 
 collec_direction = {
@@ -39,7 +39,9 @@ def send_message_motor(direction):
     return ret
     
 def send_message_lamp(zone):
-    ret = "XL" + collec_zone.get(zone,'')
+    ret = 'x'
+    if zone != -1:
+        ret = 'xl' + collec_zone.get(zone,'')
     return ret
 
 def read_data(ser):
