@@ -16,8 +16,7 @@ class zone:
         return self.name
     
     def in_zone(self,x,y):
-        ret = False
-        return ret
+        return False
 
 class zone_HG(zone):
     def __init__(self,h_param,w_param,l_param,eps_param):
