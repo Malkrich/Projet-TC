@@ -36,6 +36,8 @@ class form:
     def clear_forme(self):
         self.sommets = 0
         self.pol = 'undefined'
+        self.cX = 0
+        self.cY = 0
             
     def get_centre(self):
         return self.cX,self.cY
