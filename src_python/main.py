@@ -62,9 +62,9 @@ while(True):
             if z.in_zone(cX,cY):
                 data = send_message_lamp(z.get_zoneNb())
                 print(data)
-                ser.write(str.encode(data))
+                #ser.write(str.encode(data))
                 break
-        
+
     cv2.imshow('contours',frame)
     
     # on appuis sur q pour quitter
