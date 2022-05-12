@@ -5,12 +5,12 @@ import imutils
 
 def get_red(img):
     """ Solution RGB """
-    blue_c = img[:,:,0]
+    """blue_c = img[:,:,0]
     green_c = img[:,:,1]
     red_c = img[:,:,2]
-    ret_b, blue = cv2.threshold(blue_c,200,255,0)
-    ret_g, green = cv2.threshold(green_c,200,255,0)
-    ret_r, red = cv2.threshold(red_c,230,255,0)
+    ret_b, blue = cv2.threshold(blue_c,70,255,0)
+    ret_g, green = cv2.threshold(green_c,70,255,0)
+    ret_r, red = cv2.threshold(red_c,120,255,0)
 
     # on fait : /(blue && green) && red
     color_to_detect = red
@@ -25,17 +25,25 @@ def get_red(img):
     erosion = cv2.erode(result,kernel,iterations=2)
     dilatation = cv2.dilate(erosion,kernel,iterations=2)
     
+    return erosion"""
+    
     # debug
     #cv2.imshow('dilatation',dilatation)
     
-    """ Solution HSV """
-    #hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    #teinte_basse = np.array([110,0,0])
-    #teinte_haute = np.array([130,120,255])
-    #blue = cv2.inRange(hsv, teinte_basse, teinte_haute)
-    #cv2.imshow('blue',blue)
+    """ Solution HSV
+
+    - hue compris dans l'interval [0,179]
+    saturation et value dans l'interval [0,255]"""
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    teinte_basse = (170,50,0)
+    teinte_haute = (179,200,255)
+    red = cv2.inRange(hsv, teinte_basse, teinte_haute)
+    kernel = None
+    erosion = cv2.erode(red,kernel,iterations=5)
+    dilatation = cv2.dilate(erosion,kernel,iterations=5)
     
-    return erosion
+    cv2.imshow('dilatation',dilatation)
+    return dilatation
 
 def contours_detection(img):
     cnts = cv2.findContours(img.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
