@@ -11,15 +11,13 @@ Tram :
         - x : arreter
     
     Lampe :
-        1) h/b : haut/bas
-        2) g/d/c  : gauche/droite/centre
-
-    revenir en mode scan : "x"
+        - x : rien faire, mode normal
+        - ccX,cY : demande de ciblage, envoie c + coord_x,coord_y
 """
 
 collec_zone = {
     0 : 'hg',
-    1 : 'hd',
+    1 : 'hd', 
     2 : 'bg',
     3 : 'bd',
     4 : 'c'
@@ -38,10 +36,12 @@ def send_message_motor(direction):
         ret = 'm' + collec_direction.get(direction,'')
     return ret
     
-def send_message_lamp(zone):
-    ret = 'x'
-    if zone != -1:
-        ret = 'xl' + collec_zone.get(zone,'')
+def send_message_lamp(mode,cX,cY):
+    ret = 'lx'
+    
+    if mode == 'c':
+        ret = 'lc'+cX+','+cY
+    
     return ret
 
 def read_data(ser):
