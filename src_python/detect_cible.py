@@ -33,15 +33,21 @@ def get_red(img):
 
     - hue compris dans l'interval [0,179]
     saturation et value dans l'interval [0,255]"""
+    red_c = img[:,:,2]
+    red_th = cv2.morphologyEx(red_c,cv2.MORPH_OPEN,None,iterations=5)
+    #cv2.imshow('red',red_th)
+    img[:,:,2] = red_th
+    
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     teinte_basse = (170,100,0)
-    teinte_haute = (179,200,255)
+    teinte_haute = (179,180,255)
     red = cv2.inRange(hsv, teinte_basse, teinte_haute)
-    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(8,8))
-    fermeture = cv2.morphologyEx(red,cv2.MORPH_OPEN,kernel,iterations=1)
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(7,7))
+    ouverture = cv2.morphologyEx(red,cv2.MORPH_OPEN,kernel,iterations=1)
+    dilatation = cv2.dilate(ouverture,None,iterations=1)
     
-    #cv2.imshow('dilatation',fermeture)
-    return fermeture
+    cv2.imshow('dilatation',dilatation)
+    return dilatation
 
 def contours_detection(img):
     cnts = cv2.findContours(img.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
