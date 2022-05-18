@@ -5,7 +5,7 @@ import imutils
 
 def get_red(img):
     """ Solution RGB """
-    """blue_c = img[:,:,0]
+    blue_c = img[:,:,0]
     green_c = img[:,:,1]
     red_c = img[:,:,2]
     ret_b, blue = cv2.threshold(blue_c,70,255,0)
@@ -25,7 +25,7 @@ def get_red(img):
     erosion = cv2.erode(result,kernel,iterations=2)
     dilatation = cv2.dilate(erosion,kernel,iterations=2)
     
-    return erosion"""
+    return erosion
 
     #cv2.imshow('dilatation',dilatation)
     
@@ -33,13 +33,13 @@ def get_red(img):
 
     - hue compris dans l'interval [0,179]
     saturation et value dans l'interval [0,255]"""
-    red_c = img[:,:,2]
-    red_th = cv2.morphologyEx(red_c,cv2.MORPH_OPEN,None,iterations=5)
+    #red_c = img[:,:,2]
+    #red_th = cv2.morphologyEx(red_c,cv2.MORPH_OPEN,None,iterations=5)
     #cv2.imshow('red',red_th)
-    img[:,:,2] = red_th
+    #img[:,:,2] = red_th
     
-    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    teinte_basse = (170,100,0)
+    """hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    teinte_basse = (170,100,100)
     teinte_haute = (179,180,255)
     red = cv2.inRange(hsv, teinte_basse, teinte_haute)
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(7,7))
@@ -47,7 +47,7 @@ def get_red(img):
     dilatation = cv2.dilate(ouverture,None,iterations=1)
     
     cv2.imshow('dilatation',dilatation)
-    return dilatation
+    return dilatation"""
 
 def contours_detection(img):
     cnts = cv2.findContours(img.copy(), cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)

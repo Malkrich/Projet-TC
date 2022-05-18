@@ -54,18 +54,18 @@ while(True):
         cv2.circle(frame,(cX,cY),4,(0,255,0),-1)
         centre_str = str(cX) + ',' + str(cY)
         cv2.putText(frame, centre_str, (cX - 20, cY - 20),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-        #f.display_info()
+        f.display_info()
         
     #cX,cY = f.get_centre()
     
     # envoie de message si une forme existe
-    #if f.forme_exist():
-        #for z in liste_zone:
-            #if z.in_zone(cX,cY):
-                #data = send_message_lamp(z.get_zoneNb())
-                #print(data)
-                #ser.write(str.encode(data))
-                #break
+    if f.forme_exist():
+        for z in liste_zone:
+            if z.in_zone(cX,cY):
+                data = send_message_lamp(z.get_zoneNb())
+                print(data)
+                ser.write(str.encode(data))
+                break
 
     cv2.imshow('contours',frame)
     
