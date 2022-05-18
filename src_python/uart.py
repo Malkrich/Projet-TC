@@ -36,13 +36,8 @@ def send_message_motor(direction):
         ret = 'm' + collec_direction.get(direction,'')
     return ret
     
-def send_message_lamp(mode,cX,cY):
-    ret = 'lx'
-    
-    if mode == 'c':
-        ret = 'lc'+cX+','+cY
-    
-    return ret
+def send_message_lamp(zone):
+    return 'l' + collec_zone.get(zone,'')
 
 def read_data(ser):
     data = ""
