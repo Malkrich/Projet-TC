@@ -1,8 +1,8 @@
-from ast import pattern
-import time
 from tkinter import N
 import numpy as np
 import cv2
+
+from uart import send_message_motor
 
 
 
@@ -37,70 +37,49 @@ N=[[1,1,1,1,1,1,1,1,1,1],
 
 #          Creation de 3 fonctions obstacles
 
-def obstacle_gauche():
-    ret=False
-    if orientation_actuelle == 0:
-       if N[coord_actuelle[0]-1][coord_actuelle[1]]==1:
-           ret = True
-    elif orientation_actuelle == 1:
-        if N[coord_actuelle[0]][coord_actuelle[1]+1]==1:
-            ret = True
-    elif orientation_actuelle == 2:
-        if N[coord_actuelle[0]+1][coord_actuelle[1]]==1:
-            ret = True
-    else :
-         if N[coord_actuelle[0]][coord_actuelle[1]-1]==1:
-            ret = True
-    return ret
-    
-
-def obstacle_droite():
-    ret=False
-    if orientation_actuelle == 0:
-       if N[coord_actuelle[0]+1][coord_actuelle[1]]==1:
-           ret = True
-    elif orientation_actuelle == 1:
-        if N[coord_actuelle[0]][coord_actuelle[1]-1]==1:
-            ret = True
-    elif orientation_actuelle == 2:
-        if N[coord_actuelle[0]-1][coord_actuelle[1]]==1:
-            ret = True
-    else :
-         if N[coord_actuelle[0]][coord_actuelle[1]+1]==1:
-            ret = True
+def obstacle_gauche(distance):
+    ret = False
+    if distance <= 30:
+        ret = True
+        
     return ret
 
-def obstacle_avant():
-    ret=False
-    if orientation_actuelle == 0:
-       if N[coord_actuelle[0]][coord_actuelle[1]+1]==1:
-           ret = True
-    elif orientation_actuelle == 1:
-        if N[coord_actuelle[0]+1][coord_actuelle[1]]==1:
-            ret = True
-    elif orientation_actuelle == 2:
-        if N[coord_actuelle[0]][coord_actuelle[1]-1]==1:
-            ret = True
-    else :
-         if N[coord_actuelle[0]-1][coord_actuelle[1]]==1:
-            ret = True
+def obstacle_droite(distance):
+    ret = False
+    if distance <= 30:
+        ret = True
+        
     return ret
 
+def obstacle_avant(distance):
+    ret = False
+    if distance <= 30:
+        ret = True
+        
+    return ret
 
 
 #      Recuperation des fonctions de base (avancer,tourner,...)
 
 def virage_droite():
+    print("virage droite")
+
     orientation(1)
-    #print('virage droite')
-    return "digo 1:550:70 2:-550:70\r"
+    
+    return send_message_motor('right')
+    #return "digo 1:550:70 2:-550:70\r"
 
 def virage_gauche():
+    print("virage gauche")
+    
     orientation(-1)
-    #print('virage gauche')
-    return "digo 1:-550:70 2:550:70\r"
+    
+    return send_message_motor('left')
+    #return "digo 1:-550:70 2:550:70\r"
 
 def avancer():
+    print("avancer")
+    
     global orientation_actuelle
     if orientation_actuelle == 0:
         coord_actuelle[1]+=1
@@ -110,10 +89,8 @@ def avancer():
         coord_actuelle[1]-=1
     else :
         coord_actuelle[0]-=1
-    #print('avance')
-    #print(coord_actuelle)
-    #time.sleep(0.5)
-    return "mogo 1:-30 2:-30\r"
+    return send_messsage_motor('front')
+    #return "mogo 1:-30 2:-30\r"
 
 
 #           fonction de base
@@ -128,21 +105,18 @@ def orientation(p):
          orientation_actuelle += p
     return
 
-def premier_tour():
-    avancer()
-    while coord_actuelle != coord_init :
-        if obstacle_gauche():
-            maj_obstacle_gauche()
-            if obstacle_avant():
-                maj_obstacle_avant()
-                virage_droite()
-                avancer()
-            else :
-                avancer()
-        else:
-            virage_gauche()
+def premier_tour(distance):
+    if obstacle_gauche(distance):
+        maj_obstacle_gauche()
+        if obstacle_avant(distance):
+            maj_obstacle_avant()
+            virage_droite()
             avancer()
-    return 
+        else :
+            avancer()
+    else:
+        virage_gauche()
+        avancer()
 
 
 def mise_en_position():
@@ -285,11 +259,11 @@ def deuxieme_tour():
 
 # test global
 
-premier_tour()
-deuxieme_tour()
+#premier_tour()
+#deuxieme_tour()
 
-M=M*255
-cv2.imwrite('carto.png',M)
+#M=M*255
+#cv2.imwrite('carto.png',M)
 
 #cv2.imwrite('carto2.png',N)
 
