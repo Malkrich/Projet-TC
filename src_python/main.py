@@ -91,13 +91,15 @@ while(True):
     print(code_uart)
     cv2.imshow('contours',frame)
     ser.write(str.encode(code_uart))
-    rob.tempo()
+    #rob.tempo()
     
     # on appuis sur q pour quitter
     if cv2.waitKey(20) & 0xFF == ord('q'):
         break
 
 ## fin programme
+code_uart = send_message_motor('stop')
+ser.write(str.encode(code_uart))
 cap.release()
 cv2.destroyAllWindows()
 ser.close()
