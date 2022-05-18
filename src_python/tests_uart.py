@@ -10,7 +10,7 @@ Pin 14 = TX
 Pin 15 = RX
 """
 
-action = 'read'
+action = 'write'
 
 ## initialisation serial
 ser = serial.Serial('/dev/ttyS0',19200)
@@ -21,13 +21,12 @@ if action == 'read':
     while True:
         data = ""
         current_data = ""
-        while current_data != "x":
+        while current_data != "D":
             current_data = ser.read().decode()
             data += current_data
-            
-        print(data)
+        print("data :",data)
 
-data = send_message_motor('back')
+data = send_message_motor('stop')
 #data = send_message_lamp(2)
 if action == 'write':
     for c in data:

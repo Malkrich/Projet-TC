@@ -26,23 +26,23 @@ collec_zone = {
 collec_direction = {
     'front' : 'a',
     'back' : 'r',
-    'left' : 'l',
-    'right' : 'r',
+    'left' : 'g',
+    'right' : 'd',
 }
 
 def send_message_motor(direction):
     ret = 'x'
     if direction != 'stop':
-        ret = 'm' + collec_direction.get(direction,'')
+        ret = 'xm' + collec_direction.get(direction,'')
     return ret
     
 def send_message_lamp(zone):
-    return 'l' + collec_zone.get(zone,'')
+    return 'xl' + collec_zone.get(zone,'')
 
 def read_data(ser):
     data = ""
     current_data = ""
-    while current_data != "x":
+    while current_data != "D":
         current_data = ser.read().decode()
         data += current_data
 
