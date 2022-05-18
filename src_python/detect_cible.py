@@ -10,7 +10,7 @@ def get_red(img):
     red_c = img[:,:,2]
     ret_b, blue = cv2.threshold(blue_c,70,255,0)
     ret_g, green = cv2.threshold(green_c,70,255,0)
-    ret_r, red = cv2.threshold(red_c,120,255,0)
+    ret_r, red = cv2.threshold(red_c,170,255,0)
 
     # on fait : /(blue && green) && red
     color_to_detect = red
